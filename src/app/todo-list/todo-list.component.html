@@ -1,5 +1,7 @@
 <mat-card>
-  <mat-card-header class="mat-title-large">To Do List</mat-card-header>
+  <mat-card-header class="mat-title-large">
+    <h1>To Do List</h1>
+  </mat-card-header>
 
   <mat-card-content>
     @if (!!vm.todos().length) {
@@ -15,6 +17,7 @@
         <mat-label>Add Todo</mat-label>
         <input #newTodo matInput />
         <mat-icon matSuffix>add</mat-icon>
+        <mat-hint>Enter a todo and hit return!</mat-hint>
       </mat-form-field>
     </form>
   </mat-card-footer>
@@ -24,21 +27,24 @@
   <mat-list>
     @for (todo of vm.todos(); track todo; let isLast = $last) {
     <mat-list-item>
-      <mat-checkbox
-        [(ngModel)]="todo.completed"
-        (change)="vm.api.updateTodo(todo)"
-      >
-        {{ todo.text }}
-      </mat-checkbox>
-
-      <button
-        mat-icon-button
-        color="warn"
-        [attr.aria-label]="'Delete ' + todo.text"
-        (click)="vm.api.deleteTodo(todo.id)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
+      <span matListItemLine>
+        <mat-checkbox
+          [(ngModel)]="todo.completed"
+          (change)="vm.api.updateTodo(todo)"
+        >
+          {{ todo.text }}
+        </mat-checkbox>
+      </span>
+      <span matListItemMeta>
+        <button
+          mat-icon-button
+          color="warn"
+          [attr.aria-label]="'Delete ' + todo.text"
+          (click)="vm.api.deleteTodo(todo.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </span>
     </mat-list-item>
 
     @if (!$last) {
@@ -48,10 +54,7 @@
 </ng-template>
 
 <ng-template #notodos>
-  <div class="flex flex-align-center">
-    <mat-card-header class="mat-display-large">
-      Nuttin' to do!
-    </mat-card-header>
-    <mat-icon>sentiment_very_satisfied</mat-icon>
-  </div>
+  <h2 class="mat-display-small">
+    Congrats! You have nothing to do :)
+  </h2>
 </ng-template>

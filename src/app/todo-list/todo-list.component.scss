@@ -1,9 +1,3 @@
-@use "@angular/material" as mat;
-
-// for bug: https://github.com/angular/components/issues/26094
-.mat-mdc-card.mat-elevation-z8 {
-  @include mat.elevation(8);
-}
 
 :host {
   display: block;
@@ -12,7 +6,7 @@
 }
 
 .todo-list-footer {
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
 .todo-list-form {
