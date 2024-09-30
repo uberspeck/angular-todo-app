@@ -1,0 +1,57 @@
+<mat-card>
+  <mat-card-header class="mat-title-large">To Do List</mat-card-header>
+
+  <mat-card-content>
+    @if (!!vm.todos().length) {
+    <ng-container *ngTemplateOutlet="todolist" />
+    } @else {
+    <ng-container *ngTemplateOutlet="notodos" />
+    }
+  </mat-card-content>
+
+  <mat-card-footer class="todo-list-footer">
+    <form (submit)="vm.api.addTodo(newTodo.value); newTodo.value = ''">
+      <mat-form-field class="todo-list-form">
+        <mat-label>Add Todo</mat-label>
+        <input #newTodo matInput />
+        <mat-icon matSuffix>add</mat-icon>
+      </mat-form-field>
+    </form>
+  </mat-card-footer>
+</mat-card>
+
+<ng-template #todolist>
+  <mat-list>
+    @for (todo of vm.todos(); track todo; let isLast = $last) {
+    <mat-list-item>
+      <mat-checkbox
+        [(ngModel)]="todo.completed"
+        (change)="vm.api.updateTodo(todo)"
+      >
+        {{ todo.text }}
+      </mat-checkbox>
+
+      <button
+        mat-icon-button
+        color="warn"
+        [attr.aria-label]="'Delete ' + todo.text"
+        (click)="vm.api.deleteTodo(todo.id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+
+    @if (!$last) {
+    <mat-divider></mat-divider>
+    } }
+  </mat-list>
+</ng-template>
+
+<ng-template #notodos>
+  <div class="flex flex-align-center">
+    <mat-card-header class="mat-display-large">
+      Nuttin' to do!
+    </mat-card-header>
+    <mat-icon>sentiment_very_satisfied</mat-icon>
+  </div>
+</ng-template>
